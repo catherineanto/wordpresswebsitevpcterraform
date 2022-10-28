@@ -31,7 +31,7 @@ resource "aws_security_group_rule" "bastion-production" {
   from_port         = "22"
   to_port           = "22"
   protocol          = "tcp"
-  cidr_blocks       = ["202.170.207.220/32"]
+  cidr_blocks       = ["myipaddress/32"]
   security_group_id = module.sg-bastion.sg_id
 
 
@@ -238,12 +238,12 @@ data "template_file" "frontend" {
 #############
 
 data "aws_route53_zone" "web" {
-  name         = "catherineanto.tech"
+  name         = "example.com"
   private_zone = false
 }
 resource "aws_route53_record" "wordpress" {
   zone_id = var.hosted_zone
-  name    = "wordpress.catherineanto.tech"
+  name    = "wordpress.example.com"
   type    = "CNAME"
   ttl     = "5"
   records = [aws_instance.frontend.public_dns]
